@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}ยืนยันการสั่งซื้อ{% endblock %}
+{% block content %}
+<div class="checkout-grid">
+    <div class="form-box">
+        <h1>📍 ข้อมูลจัดส่ง</h1>
+        <form method="post">
+            <label>ชื่อผู้รับ</label>
+            <input value="{{ session.get('full_name') }}" disabled>
+            <label>ที่อยู่จัดส่ง *</label>
+            <textarea name="address" required rows="5" placeholder="บ้านเลขที่ หมู่ ถนน ตำบล อำเภอ จังหวัด รหัสไปรษณีย์"></textarea>
+            <label>หมายเหตุเพิ่มเติม</label>
+            <textarea name="note" rows="3" placeholder="เช่น ไม่ต้องใส่หลอด"></textarea>
+            <button class="btn full" type="submit">✅ ยืนยันการสั่งซื้อ</button>
+        </form>
+    </div>
+    <div class="summary order-summary">
+        <h2>สรุปออเดอร์</h2>
+        {% for item in cart %}
+            <p>{{ item.product_name }} × {{ item.quantity }} <b>{{ item.unit_price * item.quantity }} ฿</b></p>
+        {% endfor %}
+        <hr>
+        <h2>รวม {{ "%.2f"|format(total) }} ฿</h2>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="th">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Pearl Milk Tea{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<nav class="navbar">
+    <a class="brand" href="{{ url_for('home') }}">🧋 Pearl Milk Tea</a>
+    <div class="nav-links">
+        <a href="{{ url_for('home') }}">หน้าแรก</a>
+        <a href="{{ url_for('cart') }}">🛒 ตะกร้า ({{ cart_count }})</a>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('orders') }}">📦 ออเดอร์ของฉัน</a>
+            <span class="user">สวัสดี {{ session.get('full_name') }}</span>
+            <a href="{{ url_for('logout') }}">ออกจากระบบ</a>
+        {% else %}
+            <a href="{{ url_for('login') }}">เข้าสู่ระบบ</a>
+            <a class="nav-register" href="{{ url_for('register') }}">สมัครสมาชิก</a>
+        {% endif %}
+    </div>
+</nav>
+
+<main class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+    {% block content %}{% endblock %}
+</main>
+
+<footer>🧋 Pearl Milk Tea — เว็บตัวอย่างสำหรับฝึก Python Flask</footer>
+</body>
+</html>

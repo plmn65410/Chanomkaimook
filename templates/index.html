@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Pearl Milk Tea | หน้าแรก{% endblock %}
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="tag">FRESH • SWEET • FUN</p>
+        <h1>ชานมไข่มุกที่เลือกได้<br>ในแบบของคุณ 🧋</h1>
+        <p>เลือกเมนู ขนาด ความหวาน น้ำแข็ง และท็อปปิ้งได้เอง</p>
+        <a class="btn" href="#menu">ดูเมนูทั้งหมด</a>
+    </div>
+    <div class="hero-cup">🧋</div>
+</section>
+
+<h2 id="menu">เมนูทั้งหมด</h2>
+<div class="product-grid">
+{% for p in products %}
+    <article class="card">
+        <div class="drink">🧋</div>
+        <span class="category">{{ p.category }}</span>
+        <h3>{{ p.name }}</h3>
+        <p>{{ p.description }}</p>
+        <div class="card-bottom">
+            <strong>{{ p.price }} ฿</strong>
+            <a class="btn small" href="{{ url_for('product_detail', product_id=p.id) }}">เลือกเมนู</a>
+        </div>
+    </article>
+{% endfor %}
+</div>
+
+<section class="howto">
+    <h2>วิธีสั่งซื้อ</h2>
+    <div class="steps">
+        <div><b>1</b><span>สมัครสมาชิก / เข้าสู่ระบบ</span></div>
+        <div><b>2</b><span>เลือกเมนูชานม</span></div>
+        <div><b>3</b><span>เลือกไซซ์ ความหวาน น้ำแข็ง และท็อปปิ้ง</span></div>
+        <div><b>4</b><span>เพิ่มลงตะกร้า</span></div>
+        <div><b>5</b><span>กรอกที่อยู่จัดส่ง</span></div>
+        <div><b>6</b><span>ยืนยันออเดอร์</span></div>
+    </div>
+</section>
+{% endblock %}

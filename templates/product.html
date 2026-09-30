@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block title %}{{ product.name }}{% endblock %}
+{% block content %}
+<div class="product-detail">
+    <div class="big-drink">🧋</div>
+    <div>
+        <span class="category">{{ product.category }}</span>
+        <h1>{{ product.name }}</h1>
+        <p>{{ product.description }}</p>
+        <form method="post">
+            <label>ขนาด</label>
+            <div class="options">
+            {% for size, extra in sizes.items() %}
+                <label class="option">
+                    <input type="radio" name="size" value="{{ size }}" {% if size == 'M' %}checked{% endif %}>
+                    {{ size }} {% if extra %}(+{{ extra }} ฿){% else %}(ราคาปกติ){% endif %}
+                </label>
+            {% endfor %}
+            </div>
+
+            <label>ระดับความหวาน</label>
+            <select name="sweetness">
+            {% for s in sweetness %}<option>{{ s }}</option>{% endfor %}
+            </select>
+
+            <label>ระดับน้ำแข็ง</label>
+            <select name="ice">
+            {% for i in ice %}<option>{{ i }}</option>{% endfor %}
+            </select>
+
+            <label>ท็อปปิ้ง</label>
+            <div class="toppings">
+            {% for t in toppings %}
+                <label class="option">
+                    <input type="checkbox" name="toppings" value="{{ t.id }}">
+                    {{ t.name }} (+{{ t.price }} ฿)
+                </label>
+            {% endfor %}
+            </div>
+
+            <label>จำนวน</label>
+            <input type="number" name="quantity" value="1" min="1" max="20">
+            <button class="btn full" type="submit">🛒 เพิ่มลงตะกร้า</button>
+        </form>
+    </div>
+</div>
+{% endblock %}

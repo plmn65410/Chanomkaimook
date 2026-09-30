@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}ออเดอร์ของฉัน{% endblock %}
+{% block content %}
+<h1>📦 ออเดอร์ของฉัน</h1>
+{% if orders %}
+{% for order in orders %}
+<div class="order-card">
+    <div class="order-head">
+        <h2>ออเดอร์ #{{ order.id }}</h2>
+        <span>{{ order.status }}</span>
+    </div>
+    <p>วันที่: {{ order.created_at }}</p>
+    <p>ที่อยู่: {{ order.address }}</p>
+    {% if order.note %}<p>หมายเหตุ: {{ order.note }}</p>{% endif %}
+    <ul>
+    {% for item in details[order.id] %}
+        <li>{{ item.product_name }} — {{ item.size }} — หวาน {{ item.sweetness }} — น้ำแข็ง{{ item.ice }} — ×{{ item.quantity }} = {{ item.price * item.quantity }} ฿
+        {% if item.toppings %}<br>ท็อปปิ้ง: {{ item.toppings }}{% endif %}</li>
+    {% endfor %}
+    </ul>
+    <strong class="total">ยอดรวม {{ "%.2f"|format(order.total) }} ฿</strong>
+</div>
+{% endfor %}
+{% else %}
+<div class="empty">
+    <h2>ยังไม่มีประวัติการสั่งซื้อ</h2>
+    <a class="btn" href="{{ url_for('home') }}">เริ่มสั่งชานม</a>
+</div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block title %}ตะกร้าสินค้า{% endblock %}
+{% block content %}
+<h1>🛒 ตะกร้าสินค้า</h1>
+{% if cart %}
+<div class="cart-list">
+{% for item in cart %}
+    <div class="cart-item">
+        <div class="drink">🧋</div>
+        <div class="cart-info">
+            <h3>{{ item.product_name }}</h3>
+            <p>ไซซ์ {{ item.size }} • หวาน {{ item.sweetness }} • น้ำแข็ง{{ item.ice }}</p>
+            <p>ท็อปปิ้ง: {% if item.toppings %}{% for t in item.toppings %}{{ t.name }}{% if not loop.last %}, {% endif %}{% endfor %}{% else %}ไม่มี{% endif %}</p>
+        </div>
+        <div class="cart-price">
+            <b>{{ item.unit_price }} ฿ × {{ item.quantity }}</b>
+            <a href="{{ url_for('remove_cart', index=loop.index0) }}">ลบ</a>
+        </div>
+    </div>
+{% endfor %}
+</div>
+<div class="summary">
+    <h2>รวม {{ "%.2f"|format(total) }} ฿</h2>
+    {% if session.get('user_id') %}
+        <a class="btn" href="{{ url_for('checkout') }}">ดำเนินการสั่งซื้อ</a>
+    {% else %}
+        <a class="btn" href="{{ url_for('login') }}">เข้าสู่ระบบเพื่อสั่งซื้อ</a>
+    {% endif %}
+</div>
+{% else %}
+<div class="empty">
+    <h2>ตะกร้ายังว่างครับ 🧋</h2>
+    <a class="btn" href="{{ url_for('home') }}">กลับไปเลือกเมนู</a>
+</div>
+{% endif %}
+{% endblock %}
